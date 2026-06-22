@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetim Paneli | Nurullah B.</title>
+    <meta name="description" content="Nurullah B. blog yönetim paneli - içerik ve site ayarlarını yönetin.">
+
+    <!-- Fontlar -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome (Cloudflare CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Admin Panel CSS -->
+    <link rel="stylesheet" href="/assets/styles/admin.css">
+</head>
+
+<body class="admin-theme-light">
+    <!-- Ana Layout Container -->
+    <div class="admin-layout">
+
+        <!-- Sidebar -->
+        <aside id="admin-sidebar" class="admin-sidebar" role="navigation" aria-label="Yonetim paneli navigasyonu">
+            <!-- Sidebar icerigi AdminSidebar.js tarafindan render edilir -->
+        </aside>
+
+        <!-- Sidebar Overlay (Mobil) -->
+        <div id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></div>
+
+        <!-- Ana Icerik Alani -->
+        <div class="admin-main">
+            <!-- Topbar -->
+            <header id="admin-topbar" class="admin-topbar" role="banner">
+                <!-- Topbar icerigi AdminApp.js tarafindan render edilir -->
+            </header>
+
+            <!-- Sayfa Icerigi -->
+            <main id="admin-content" class="admin-content" role="main" aria-live="polite">
+                <div class="admin-loading-state">
+                    <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+                    <span>Yükleniyor...</span>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Mobil Sidebar Toggle -->
+    <button id="sidebar-mobile-toggle" class="sidebar-mobile-toggle" aria-label="Menuyu ac/kapat">
+        <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+
+    <!-- Toast Bildirim Container -->
+    <div id="toast-container" class="toast-container" aria-live="assertive"></div>
+
+    <!-- Admin Panel Uygulama Giris Noktasi -->
+    <script type="module" src="/assets/scripts/admin/AdminApp.js"></script>
+</body>
+
+</html>

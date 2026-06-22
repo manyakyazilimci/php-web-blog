@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş | Yönetim Paneli</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/styles/admin.css">
+    <style>
+        body { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: var(--admin-bg); }
+        .login-card {
+            width: 100%; max-width: 420px; padding: 2.5rem;
+            background: var(--admin-surface); border: 1px solid var(--admin-border);
+            border-radius: var(--admin-radius-xl); box-shadow: var(--admin-shadow-lg);
+        }
+        .login-logo { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--admin-accent); }
+        .login-subtitle { color: var(--admin-text-muted); margin-bottom: 2rem; font-size: 0.95rem; }
+        .login-error { color: var(--admin-danger); font-size: 0.85rem; margin-top: 1rem; display: none; }
+    </style>
+</head>
+
+<body class="admin-theme-light">
+    <div class="login-card">
+        <div class="login-logo"><i class="fas fa-lock"></i> NB Admin</div>
+        <p class="login-subtitle">Yönetim paneline erişmek için giriş yapın.</p>
+
+        <form id="login-form">
+            <div class="admin-form-group">
+                <label class="admin-form-label" for="username">Kullanıcı Adı</label>
+                <input type="text" id="username" class="admin-form-input" autocomplete="username" required autofocus>
+            </div>
+            <div class="admin-form-group">
+                <label class="admin-form-label" for="password">Şifre</label>
+                <input type="password" id="password" class="admin-form-input" autocomplete="current-password" required>
+            </div>
+            <button type="submit" class="admin-btn admin-btn-primary" style="width:100%;justify-content:center;margin-top:0.5rem;" id="btn-login">
+                <i class="fas fa-sign-in-alt"></i> Giriş Yap
+            </button>
+            <div class="login-error" id="login-error"></div>
+        </form>
+    </div>
+
+    <script type="module">
+        import { ApiService } from '/assets/scripts/ApiService.js';
+
+        ApiService.checkAuth().then(() => {
+            window.location.href = '/admin';
+        }).catch(() => {});
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-login');
+            const errEl = document.getElementById('login-error');
+            errEl.style.display = 'none';
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Giriş yapılıyor...';
+
+            try {
+                await ApiService.login(
+                    document.getElementById('username').value.trim(),
+                    document.getElementById('password').value
+                );
+                window.location.href = '/admin';
+            } catch (error) {
+                errEl.textContent = error.message || 'Giriş başarısız.';
+                errEl.style.display = 'block';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Giriş Yap';
+            }
+        });
+    </script>
+</body>
+
+</html>

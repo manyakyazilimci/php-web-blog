@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nurullah B. | Kişisel Blog</title>
+    <meta name="description" id="meta-description"
+        content="Dijital dünyada estetik ve işlevi bir araya getiren kişisel blog.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,700;1,6..96,400&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/styles/main.css">
+</head>
+
+<body class="theme-light">
+    <!-- Subtle Grain Texture -->
+    <div class="noise-overlay"></div>
+
+    <header class="header">
+        <div class="header-inner container">
+            <a href="/" class="brand">NB.</a>
+            <nav class="nav-links">
+                <a href="/" class="active">Ana Sayfa</a>
+                <a href="/arsiv">Arşiv</a>
+                <a href="/manifesto">Manifesto</a>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Temayı Değiştir">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="#" class="btn-accent newsletter-trigger">Bültene Katıl</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dinamik İçeriğin Yükleneceği Kök Element -->
+    <main id="app-root">
+        <div class="loading-state">
+            <i class="fas fa-spinner fa-spin loading-spinner"></i>
+            Yükleniyor...
+        </div>
+    </main>
+
+    <footer class="footer container reveal">
+        <p>&copy; 2026 Nurullah B. Dijital Günlük.</p>
+    </footer>
+
+    <!-- =========================================================================
+         SPA SAYFA ŞABLONLARI (TEMPLATES)
+         ========================================================================= -->
+
+    <!-- 1. ANA SAYFA ŞABLONU -->
+    <template id="temp-blog">
+        <!-- Expressive Hero -->
+        <section class="about-hero container reveal">
+            <div class="about-grid">
+                <div class="about-image-wrap">
+                    <div class="about-image bg-placeholder-1"></div>
+                </div>
+                <div class="about-content">
+                    <div class="tagline">Hakkımda</div>
+                    <h1 class="about-title">Merhaba, ben Nurullah.</h1>
+                    <p class="about-subtitle">Dijital dünyada estetik ve işlevi bir araya getiren bir ürün tasarımcısı
+                        ve geliştiricisiyim.</p>
+                    <p class="about-text">İyi tasarımın sadece güzel görünmekle kalmayıp, karmaşık problemleri basit
+                        etkileşimlere dönüştürmek olduğuna inanıyorum. Bu blogda kod, tasarım ve web'in geleceği üzerine
+                        fikirlerimi paylaşıyorum.</p>
+                    <div class="about-actions">
+                        <a href="#" class="btn-accent contact-trigger" style="display:inline-block;">Benimle İletişime
+                            Geç</a>
+                        <div class="social-links">
+                            <a href="#">Twitter</a>
+                            <a href="#">GitHub</a>
+                            <a href="#">LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Blog Layout (Bento Style) -->
+        <section class="articles container">
+            <div class="section-header reveal">
+                <h2>Blog</h2>
+                <a href="/arsiv" class="view-all">Arşivi İncele <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="bento-grid" id="bento-blog-container">
+                <!-- Yazılar JavaScript ile yüklenecektir -->
+            </div>
+        </section>
+    </template>
+
+    <!-- 2. MANİFESTO SAYFASI ŞABLONU -->
+    <template id="temp-manifesto">
+        <div class="manifesto-layout container">
+            <header class="manifesto-header reveal">
+                <h1 class="manifesto-title">Tasarım Manifestosu</h1>
+                <p class="manifesto-subtitle">Dijital ekosistemde nasıl var olmalıyız?</p>
+            </header>
+
+            <article class="manifesto-content reveal delayed-1">
+                <!-- Manifesto icerigi API'den yuklenir -->
+            </article>
+        </div>
+    </template>
+
+    <!-- 3. ARŞİV SAYFASI ŞABLONU -->
+    <template id="temp-arsiv">
+        <div class="archive-layout container">
+            <header class="archive-header reveal">
+                <h1 class="archive-title">Tüm Yazılar</h1>
+            </header>
+
+            <div class="archive-search-container reveal delayed-1">
+                <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="archive-search" placeholder="Yazı başlığı veya kategori ara...">
+                </div>
+            </div>
+
+            <div id="archive-container">
+                <!-- Yazılar JavaScript ile dinamik olarak yüklenecektir -->
+            </div>
+        </div>
+    </template>
+
+    <!-- 5. YAZI DETAY SAYFASI ŞABLONU -->
+    <template id="temp-post">
+        <div class="post-layout">
+            <!-- Post Header -->
+            <header class="post-header container">
+                <div class="post-meta reveal">
+                    <span class="category-tag" id="post-category">-</span>
+                    <span class="dot"></span>
+                    <time id="post-date" datetime="">-</time>
+                    <span class="dot"></span>
+                    <span id="post-read-time">-</span>
+                </div>
+                <h1 class="post-title reveal delayed-1" id="post-title">-</h1>
+                <p class="post-lead reveal delayed-2" id="post-lead">-</p>
+            </header>
+
+            <!-- Featured Image -->
+            <div class="post-hero-image container reveal delayed-2">
+                <div class="hero-img-wrap bg-placeholder-1">
+                    <!-- Öne Çıkan Görsel Alanı -->
+                </div>
+            </div>
+
+            <!-- Article Content -->
+            <article class="post-content container reveal delayed-2" id="post-body">
+                <!-- Dinamik olarak script.js tarafından doldurulacaktır -->
+            </article>
+
+            <!-- Author -->
+            <footer class="post-footer container reveal">
+                <div class="author-card">
+                    <div class="author-avatar bg-placeholder-4"></div>
+                    <div class="author-info">
+                        <h4>Nurullah B.</h4>
+                        <p>Tasarımcı ve Geliştirici. Karmaşık sistemleri basit arayüzlere dönüştürmeyi sever.</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </template>
+
+    <script type="module" src="/assets/scripts/App.js"></script>
+</body>
+
+</html>
